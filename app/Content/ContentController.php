@@ -22,4 +22,8 @@ class ContentController extends Controller {
         echo $view->renderPage($this->model->getPage($this->params->page_id));
     }
 
+    public function processPOST() {
+        
+    }
+
 }

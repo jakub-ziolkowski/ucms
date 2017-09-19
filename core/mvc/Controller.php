@@ -14,6 +14,7 @@ abstract class Controller {
         $this->sql = $sql;
     }
 
+    public abstract function processPOST();
     public abstract function process();
 
     /**

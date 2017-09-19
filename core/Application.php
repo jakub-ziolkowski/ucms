@@ -1,6 +1,6 @@
 <?php
 
-require 'Utils.php';
+require 'utils/Utils.php';
 require 'mvc/Model.php';
 require 'mvc/View.php';
 require 'mvc/Controller.php';
@@ -33,12 +33,16 @@ class Application {
         $this->model = new ApplicationModel($this->sql);
         $this->router = new Router($path, $this->model);
         Config::$db = &$this->sql;
-        $route = $this->model->getRoute();
         $errorHandlerView = new ApplicationErrorHandler();
+        $route = $this->model->getRoute();
         if (!empty($route)) {
             $controller = $this->router->runController($route['controllerClass'], $route['params']);
             if (!is_null($controller)) {
-                $controller->process();
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    $controller->processPOST();
+                } else {
+                    $controller->process();
+                }
             } else {
                 header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
                 echo $errorHandlerView->render500();
