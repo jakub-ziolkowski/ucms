@@ -4,7 +4,6 @@ class ApplicationErrorHandler extends View {
 
     public function render404() {
         $this->loadFile("404Page", Config::$dir . "/404.html");
-        echo
         $this->addTag("version", Config::$version);
         $this->addTag("request_uri", $_SERVER['REQUEST_URI']);
 
@@ -13,7 +12,6 @@ class ApplicationErrorHandler extends View {
 
     public function render500() {
         $this->loadFile("500Page", Config::$dir . "/500.html");
-        echo
         $this->addTag("version", Config::$version);
         $this->addTag("request_uri", $_SERVER['REQUEST_URI']);
 

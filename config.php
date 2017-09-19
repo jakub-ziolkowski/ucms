@@ -11,7 +11,7 @@ Config::$dir = __DIR__;
 Config::$server = 'localhost';
 Config::$database = 'ucms';
 Config::$user = 'root';
-Config::$password = '';
+Config::$password = 'qpalzm';
 
 // for debug purpose (more verbose messaging)
 Config::$debug = FALSE;

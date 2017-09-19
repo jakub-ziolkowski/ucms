@@ -7,6 +7,7 @@ class ContentHTMLView extends View {
         $this->addTag("path", Config::$base_url."/app/Content/tpl/");
         $this->addTag("title", $model['title']);
         $this->addTag("content", $model['html']);
+        header('Content-type: text/html');
         return $this->render("mainPage");
     }
 
