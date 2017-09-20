@@ -1,6 +1,7 @@
 <?php
 
 require 'utils/Utils.php';
+require 'utils/FormUtils.php';
 require 'mvc/Model.php';
 require 'mvc/View.php';
 require 'mvc/Controller.php';

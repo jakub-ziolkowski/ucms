@@ -1,7 +1,5 @@
 <?php
 
-include 'FormUtils.php';
-
 class Utils {
 
     public static function randomString($length = 5) {

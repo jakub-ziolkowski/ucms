@@ -8,4 +8,8 @@ class ApplicationAdminController extends Controller {
         
     }
 
+    public function processPOST() {
+        
+    }
+
 }
