@@ -1,5 +1,7 @@
 <?php
 
+require Config::$dir . '/app/Content/ContentHTMLView.php';
+
 class ContactView extends View {
 
     public function getCaptcha($code) {
@@ -14,13 +16,28 @@ class ContactView extends View {
         imagepng($img);
     }
 
-    public function renderContactForm($form) {
-        print_r($this);
-        $this->loadFile("contactPage", Config::$dir . "/app/Contact/tpl/Contact.html");
-        $this->addTag("path", Config::$base_url . "/app/Contact/tpl/");
-        $this->addTag("contactForm", $form);
-        $this->addTag("captchaImage", "<img src='' />");
-        header('Content-type: text/html');
+    public function getFormErrors($errors) {
+        $html = "<ul class='formErrors'>";
+        foreach ($errors as $error) {
+            $html .= "<li>$error</li>";
+        }
+        $html .= "</ul>";
+        return $html;
+    }
+
+    public function renderContactForm($userData) {
+        $pageView = new ContentHTMLView();
+        
+        $formFactory = new FormFactory();
+        $formFactory->createForm("contact", "POST", null);
+        $formFactory->addTag(new HTMLInput("text", "name", (array_key_exists("name", $userData) ? $userData['name'] : ""), "Imie"));
+        $formFactory->addTag(new HTMLInput("text", "email", (array_key_exists("email", $userData) ? $userData['email'] : ""), "Email"));
+        $formFactory->addTag(new HTMLTextarea("message", (array_key_exists("message", $userData) ? $userData['message'] : ""), "Wiadomosc"));
+        $formFactory->addTag(new HTMLGeneric("<img src='".Utils::getRequestString()."&getCaptha'/>"));
+        $formFactory->addTag(new HTMLInput("text", "code", (array_key_exists("code", $userData) ? $userData['code'] : ""), "Przepisz kod"));
+
+        $model = array("title" => "Contact", "html" => $formFactory->renderForm());
+        $this->load("contactPage", $pageView->renderPage($model));
         return $this->render("contactPage");
     }
 

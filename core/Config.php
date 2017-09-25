@@ -11,7 +11,7 @@ class Config {
     public static $debug = true;
     public static $dir = "";
     public static $db;
-    public static $version = "1.0.1";
+    public static $version = "&micro;cms 1.0.2";
 
     public static function getConfig($name) {
         $sql = self::$db->prepare('SELECT * from `registry` where name = ?');

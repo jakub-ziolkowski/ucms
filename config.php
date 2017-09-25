@@ -14,4 +14,4 @@ Config::$user = 'root';
 Config::$password = 'qpalzm';
 
 // for debug purpose (more verbose messaging)
-Config::$debug = FALSE;
+Config::$debug = true;

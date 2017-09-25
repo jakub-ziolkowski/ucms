@@ -4,14 +4,14 @@ class Router {
 
     /**
      *
-     * @var ApplicationModel
+     * @var Application
      */
-    public $model;
-    public $applicationPath = null;
+    protected $app;
+    public $extensionsPath = null;
 
-    function __construct($path, $sql) {
-        $this->model = $sql;
-        $this->applicationPath = $path . "/app";
+    function __construct($path, Application $app) {
+        $this->app = $app;
+        $this->extensionsPath = $path . "/app";
     }
 
     /**
@@ -35,7 +35,6 @@ class Router {
         return $request_array;
     }
 
-    
     /**
      * Run controller 
      * @param String $modulePath
@@ -43,13 +42,12 @@ class Router {
      * @return Controller
      */
     public function runController($modulePath, $params) {
-        $path = $this->applicationPath . "/" . $modulePath . ".php";
+        $path = $this->extensionsPath . "/" . $modulePath . ".php";
         $_path = explode("/", $modulePath);
         $controllerName = $_path[count($_path) - 1];
         if (file_exists($path)) {
             include $path;
-            return new $controllerName($params, $this->model->sql);
-            
+            return new $controllerName($params, $this->app);
         }
     }
 

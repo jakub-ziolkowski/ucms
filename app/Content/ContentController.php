@@ -12,8 +12,8 @@ class ContentController extends Controller {
      */
     public $model = null;
 
-    public function process() {
-        $this->model = new ContentModel($this->sql);
+    public function processRequest() {
+        $this->model = new ContentModel($this->app->sql);
         if (empty(filter_input(INPUT_GET, "xml"))) {
             $view = new ContentHTMLView();
         } else {
@@ -22,7 +22,7 @@ class ContentController extends Controller {
         echo $view->renderPage($this->model->getPage($this->params->page_id));
     }
 
-    public function processPOST() {
+    public function processPostRequest() {
         
     }
 

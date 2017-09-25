@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
 <html>
     <head>
         <title>500 Internal Server Error</title>
@@ -6,14 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>
-            <h1>Internal Server Error</h1>
-            <hr/>
-            <p>Requested URI </p>
-            <pre>${request_uri}</pre>
-            <p>caused fatal error on this server</p>
-            <hr/>
-            <p>uCMS ${version}</p>
-        </div>
+        <h1>Internal Server Error</h1>
+        <p>The requested URL ${request_uri} caused error on this server.</p>
+        <hr/>
+        <p>${version_string}</p>
     </body>
 </html>
+

@@ -4,21 +4,25 @@ abstract class Controller {
 
     /**
      *
-     * @var PDO
+     * @var Application
      */
-    protected $sql;
+    protected $app;
     protected $params;
 
-    function __construct($params, $sql) {
+    function __construct($params, $app) {
         $this->params = json_decode($params);
-        $this->sql = $sql;
+        $this->app = $app;
+        $this->init();
     }
 
-    public abstract function processPOST();
-    public abstract function process();
+    public abstract function init();
+    
+    public abstract function processPostRequest();
+
+    public abstract function processRequest();
 
     /**
-     * Przekieruj na adres
+     * Redirect to specified url
      * @param String $url
      */
     public function redirect($url) {

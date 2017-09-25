@@ -3,12 +3,11 @@
 class ContentHTMLView extends View {
 
     public function renderPage($model) {
-        $this->loadFile("mainPage", Config::$dir . "/app/Content/tpl/".$model['template']);
-        $this->addTag("path", Config::$base_url."/app/Content/tpl/");
+        $this->loadFile("content", Config::$dir . "/html/bootstrap.html");
         $this->addTag("title", $model['title']);
-        $this->addTag("content", $model['html']);
+        $this->addTag("html", $model['html']);
         header('Content-type: text/html');
-        return $this->render("mainPage");
+        return $this->render("content");
     }
 
 }

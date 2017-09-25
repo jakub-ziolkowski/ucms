@@ -46,7 +46,7 @@ abstract class View {
      * @param type $tpl Template internal name
      * @return String Parsed template string buffer
      */
-    public function parse($tpl) {
+    private function parse($tpl) {
         if (!empty($this->tags)) {
             foreach ($this->tags as $k => $v) {
                 $this->buffer[$tpl] = str_replace('${' . $k . '}', $v, $this->buffer[$tpl]);

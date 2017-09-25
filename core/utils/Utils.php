@@ -6,11 +6,15 @@ class Utils {
         return substr(str_shuffle(str_repeat($x = 'abcdef0123456789', ceil($length / strlen($x)))), 1, $length);
     }
 
-    public function extractZip($filePath, $outputDirectory) {
+    public static function extractZip($filePath, $outputDirectory) {
         $zip = new ZipArchive;
         $zip->open($filePath);
         $zip->extractTo($outputDirectory);
         $zip->close();
+    }
+    
+    public static function getRequestString(){
+        return filter_input(INPUT_SERVER, "REQUEST_URI");
     }
 
 }

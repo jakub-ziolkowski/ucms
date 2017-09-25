@@ -30,26 +30,26 @@ class Application {
     public $router;
 
     function __construct($path) {
-        $this->sql = $this->getConnection("utf-8");
+        session_start();
+        $this->sql = $this->getConnection("utf8");
         $this->model = new ApplicationModel($this->sql);
-        $this->router = new Router($path, $this->model);
+        $this->router = new Router($path, $this);
         Config::$db = &$this->sql;
         $errorHandlerView = new ApplicationErrorHandler();
         $route = $this->model->getRoute();
         if (!empty($route)) {
             $controller = $this->router->runController($route['controllerClass'], $route['params']);
             if (!is_null($controller)) {
-                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    $controller->processPOST();
-                } else {
-                    $controller->process();
+                if (filter_input(INPUT_SERVER, "REQUEST_METHOD") === 'POST') {
+                    $controller->processPostRequest();
                 }
+                $controller->processRequest();
             } else {
-                header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
+                header(filter_input(INPUT_SERVER, "SERVER_PROTOCOL") . ' 500 Internal Server Error', true, 500);
                 echo $errorHandlerView->render500();
             }
         } else {
-            header($_SERVER['SERVER_PROTOCOL'] . " 404 Not Found", true, 404);
+            header(filter_input(INPUT_SERVER, "SERVER_PROTOCOL") . " 404 Not Found", true, 404);
             echo $errorHandlerView->render404();
         }
     }
@@ -64,7 +64,7 @@ class Application {
         try {
             $sql = new PDO('mysql:host=' . Config::$server . ';dbname=' . Config::$database, Config::$user, Config::$password);
             if (config::$debug) {
-                $this->sql->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $sql->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             }
             $sql->query("SET NAMES $encoding");
         } catch (PDOException $e) {
