@@ -26,19 +26,15 @@ class ContactView extends View {
     }
 
     public function renderContactForm($userData) {
-        $pageView = new ContentHTMLView();
-        
         $formFactory = new FormFactory();
         $formFactory->createForm("contact", "POST", null);
         $formFactory->addTag(new HTMLInput("text", "name", (array_key_exists("name", $userData) ? $userData['name'] : ""), "Imie"));
         $formFactory->addTag(new HTMLInput("text", "email", (array_key_exists("email", $userData) ? $userData['email'] : ""), "Email"));
         $formFactory->addTag(new HTMLTextarea("message", (array_key_exists("message", $userData) ? $userData['message'] : ""), "Wiadomosc"));
-        $formFactory->addTag(new HTMLGeneric("<img src='".Utils::getRequestString()."&getCaptha'/>"));
+        $formFactory->addTag(new HTMLGeneric("<img src='" . Utils::getRequestString() . "&getCaptha'/>"));
         $formFactory->addTag(new HTMLInput("text", "code", (array_key_exists("code", $userData) ? $userData['code'] : ""), "Przepisz kod"));
 
-        $model = array("title" => "Contact", "html" => $formFactory->renderForm());
-        $this->load("contactPage", $pageView->renderPage($model));
-        return $this->render("contactPage");
+        return $formFactory->renderForm();
     }
 
 }

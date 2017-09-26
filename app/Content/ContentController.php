@@ -12,6 +12,10 @@ class ContentController extends Controller {
      */
     public $model = null;
 
+    public function init() {
+        
+    }
+
     public function processRequest() {
         $this->model = new ContentModel($this->app->sql);
         if (empty(filter_input(INPUT_GET, "xml"))) {
